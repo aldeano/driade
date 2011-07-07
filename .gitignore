@@ -6,13 +6,9 @@
 # Directories #
 ###############
 logs/
-respaldo_gmaps/
-datos/migrations/
 
 # Specific files #
 ##################
-settings.py
-datos/variables.py
 
 # OS generated files #
 ######################

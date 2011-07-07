@@ -1,0 +1,23 @@
+# File types #
+##############
+*.pyc
+*.csv
+
+# Directories #
+###############
+logs/
+respaldo_gmaps/
+datos/migrations/
+
+# Specific files #
+##################
+settings.py
+datos/variables.py
+
+# OS generated files #
+######################
+.DS_Store?
+ehthumbs.db
+Icon?
+Thumbs.db
+*~

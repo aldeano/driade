@@ -8,7 +8,9 @@
 </head>
 
 <body>
-    <h1>Página de inicio</h1>
+    <h1>Driade</h1>
+    {% block contenido %}<h2>Página de Inicio</h2>
+    <p><a href="{% url home_calcs %}">Ir a los cálculos</a></p>{% endblock %}
 </body>
 
 </html>

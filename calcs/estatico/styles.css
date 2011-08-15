@@ -1,0 +1,14 @@
+/*
+Layout
+------------------------------------*/
+
+#container {
+	max-width: 960px;
+	margin: 0 auto;
+	}
+#header {
+	height: 100px;
+	margin: 0 auto;
+	border-bottom: 1px solid #BBBBBB;
+	clear:both;
+	}

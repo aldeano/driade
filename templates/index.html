@@ -5,12 +5,15 @@
 <head>
 	<title>Driade</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles.css" />
 </head>
 
 <body>
-    <h1>Driade</h1>
-    {% block contenido %}<h2>Página de Inicio</h2>
-    <p><a href="{% url home_calcs %}">Ir a los cálculos</a></p>{% endblock %}
+    <div id="container">
+        <h1>Driade</h1>
+        {% block contenido %}<h2>Página de Inicio</h2>
+        <p><a href="{% url home_calcs %}">Ir a los cálculos</a></p>{% endblock %}
+    </div>
 </body>
 
 </html>

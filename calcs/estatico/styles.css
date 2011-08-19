@@ -17,6 +17,9 @@ Layout
     border-top: 1px solid #BBBBBB;
     border-bottom: 1px solid #BBBBBB;
     }
+#content {
+    width: 100%;
+    }
 /*
 menu
 */
@@ -43,5 +46,13 @@ ul.menu_links {
     height: 30px;
     vertical-align: middle;
     }
-
-
+/*
+calc buttons
+*/
+.calc_button {
+    float:left;
+    margin-right: 10px;
+    border: #202C9A solid 2px;
+    width: 300px;
+    text-align: center;
+    }

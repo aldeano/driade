@@ -23,8 +23,16 @@
             </ul>
         </div>
         <div id="content">
-            {% block contenido %}<h2>Página de Inicio</h2>
-            <p><a href="{% url home_calcs %}">Ir a los cálculos</a></p>{% endblock %}
+            {% block contenido %}<h2>Qué quieres calcular?</h2>
+            <div class="calc_button">
+                <p><a href="#">Frío</a></p>
+            </div>
+            <div class="calc_button">
+                <p><a href="{% url home_calcs %}">Calor</a></p>
+            </div>
+            <div class="calc_button">
+                <p><a href="{% url home_calcs %}">Evapotranspiración</a></p>
+            </div>{% endblock %}
         </div>
     </div>
 </body>

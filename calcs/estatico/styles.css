@@ -52,7 +52,22 @@ calc buttons
 .calc_button {
     float:left;
     margin-right: 10px;
+    margin-bottom: 10px;
     border: #202C9A solid 2px;
     width: 300px;
     text-align: center;
+    }
+/*
+form and explanations
+*/
+#forms {
+    width: 600px;
+    float: left;
+    margin-right: 10px;
+    border: #CA4754 solid 2px;
+    }
+#explanation {
+    width: 315px;
+    float: left;
+    border: #7C7B0D solid 2px;
     }

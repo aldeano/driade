@@ -4,10 +4,10 @@
 from django.shortcuts import render
 
 def home(request):
-    return render(request, "calcs/index.html")
+    return render(request, "calcs/calcs_index.html")
     
 def chill(request):
-    pass
+    return render(request, "calcs/chill.html")
     
 def heat(request):
     pass

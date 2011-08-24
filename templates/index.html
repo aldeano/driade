@@ -25,7 +25,7 @@
         <div id="content">
             {% block contenido %}<h2>Qué quieres calcular?</h2>
             <div class="calc_button">
-                <p><a href="#">Frío</a></p>
+                <p><a href="{% url chill %}">Frío</a></p>
             </div>
             <div class="calc_button">
                 <p><a href="{% url home_calcs %}">Calor</a></p>
@@ -34,11 +34,11 @@
                 <p><a href="{% url home_calcs %}">Evapotranspiración</a></p>
             </div>{% endblock %}
         </div>
-        <div id="forms">
-            <p>Aquí van los formularios</p>
+        <div id="forms">{% block form_choice %}
+            <p>Aquí van los formularios</p>{% endblock %}
         </div>
-        <div id="explanation">
-            <p>Aquí va la explicación</p>
+        <div id="explanation">{% block explanation_choice %}
+            <p>Aquí va la explicación</p>{% endblock %}
         </div>
     
     </div>

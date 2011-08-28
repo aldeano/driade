@@ -10,8 +10,8 @@ def chill(request):
     return render(request, "calcs/chill.html")
     
 def heat(request):
-    pass
+    return render(request, "calcs/heat.html")
     
 def evapo(request):
-    pass
+    return render(request, "calcs/evapo.html")
     

@@ -6,14 +6,7 @@
 	<title>Driade</title>
 	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}styles.css" />
-    <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.6.2.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $(".calc_button a").click(function() {
-                $.get(this.href);
-            });   
-        });
-    </script>
+    <script type="text/javascript" src="{{ STATIC_URL }}jquery-1.6.4.min.js"></script>
 </head>
 
 <body>
@@ -33,13 +26,13 @@
         <div id="content">
             {% block contenido %}<h2>Qué quieres calcular?</h2>
             <div class="calc_button">
-                <p><a href="{% url chill %}">Frío</a></p>
+                <p>Frío</p>
             </div>
             <div class="calc_button">
-                <p><a href="{% url heat %}">Calor</a></p>
+                <p>Calor</p>
             </div>
             <div class="calc_button">
-                <p><a href="{% url evapo %}">Evapotranspiración</a></p>
+                <p>Evapotranspiración</p>
             </div>{% endblock %}
         </div>
         <div id="forms">{% block form_choice %}
@@ -48,8 +41,19 @@
         <div id="explanation">{% block explanation_choice %}
             <p>Aquí va la explicación</p>{% endblock %}
         </div>
-    
     </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#forms").hide();
+            $("#explanation").hide();
+            $(".calc_button").click(function() {
+                $("#forms").hide();
+                $("#explanation").hide();
+                $("#forms").show("slow");
+                $("#explanation").show("slow");
+            });   
+        });
+    </script>
 </body>
 
 </html>

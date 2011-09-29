@@ -12,8 +12,8 @@ class ChillForm(forms.Form):
         )
     
     chill_method = forms.ChoiceField(choices=chill_choices, label="Método")
-    since = forms.DateField(label="Desde")
-    until = forms.DateField(label="Hasta")
+    temp = forms.DecimalField(label="Temperatura ºC")
+    base_temp = forms.DecimalField(label="Temperatura base ºC")
     
 class HeatForm(forms.Form):
     
@@ -23,8 +23,8 @@ class HeatForm(forms.Form):
         )
     
     heat_method = forms.ChoiceField(choices=heat_choices, label="Método")
-    since = forms.DateField(label="Desde")
-    until = forms.DateField(label="Hasta")
+    temp = forms.DecimalField(label="Temperatura ºC")
+    base_temp = forms.DecimalField(label="Temperatura base ºC")
     
 class EvapoForm(forms.Form):
     

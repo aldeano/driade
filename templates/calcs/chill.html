@@ -1,5 +1,8 @@
 {% extends 'index.html' %}
 {% block form_choice %}
+{% if results %}
+    {{ results }}
+{% endif %}
 <p>Aquí va el formulario para los índices de frío</p>
 {{ chill_form.as_p }}
 {% endblock %}

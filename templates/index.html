@@ -26,34 +26,26 @@
         <div id="content">
             {% block contenido %}<h2>Qué quieres calcular?</h2>
             <div class="calc_button">
-                <p>Frío</p>
+                <p><a href="{% url chill %}">Frío</a></p>
             </div>
             <div class="calc_button">
-                <p>Calor</p>
+                <p><a href="{% url heat %}">Calor</a></p>
             </div>
             <div class="calc_button">
-                <p>Evapotranspiración</p>
+                <p><a href="{% url evapo %}">Evapotranspiración</a></p>
             </div>{% endblock %}
         </div>
-        <div id="forms">{% block form_choice %}
-            <p>Aquí van los formularios</p>{% endblock %}
+        <div id="forms">
+            {% block form_choice %}
+            <p>Aquí va el formulario</p>
+            {% endblock %}
+            <input type="submit" name="" value="Go for it!" id="#input_button" />
         </div>
-        <div id="explanation">{% block explanation_choice %}
-            <p>Aquí va la explicación</p>{% endblock %}
+        <div id="explanation">
+            {% block explanation_choice %}
+            <p>Aquí va la explicación</p>
+            {% endblock %}
         </div>
     </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $("#forms").hide();
-            $("#explanation").hide();
-            $(".calc_button").click(function() {
-                $("#forms").hide();
-                $("#explanation").hide();
-                $("#forms").show("slow");
-                $("#explanation").show("slow");
-            });   
-        });
-    </script>
 </body>
-
 </html>

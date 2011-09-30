@@ -13,7 +13,7 @@ class ChillForm(forms.Form):
     
     chill_method = forms.ChoiceField(choices=chill_choices, label="Método")
     temp = forms.DecimalField(label="Temperatura ºC")
-    base_temp = forms.DecimalField(label="Temperatura base ºC")
+    base_temp = forms.DecimalField(label="Temperatura base ºC", required=False)
     
 class HeatForm(forms.Form):
     
@@ -24,7 +24,7 @@ class HeatForm(forms.Form):
     
     heat_method = forms.ChoiceField(choices=heat_choices, label="Método")
     temp = forms.DecimalField(label="Temperatura ºC")
-    base_temp = forms.DecimalField(label="Temperatura base ºC")
+    base_temp = forms.DecimalField(label="Temperatura base ºC", required=False)
     
 class EvapoForm(forms.Form):
     

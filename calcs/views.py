@@ -9,7 +9,15 @@ def home(request):
     
 def chill(request):
     form = ChillForm()
-    dicc = {"chill_form": form}
+    results = None
+    
+    if request.method == "POST":
+        form = ChillForm(request.POST)
+        if form.is_valid():
+            method = form.cleaned_data["chill_method"]
+            results = "Elegiste calcular %s" % method        
+    dicc = {"chill_form": form, "results": results}
+    
     return render(request, "calcs/chill.html", dicc)
     
 def heat(request):

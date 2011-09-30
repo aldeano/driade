@@ -1,7 +1,10 @@
 {% extends 'index.html' %}
 {% block form_choice %}
 <p>Aquí va el formulario para los índices de calor</p>
-{{ heat_form.as_p }}
+<form action="{% url heat %}" method="post">{% csrf_token %}
+    {{ heat_form.as_p }}
+    <input type="submit" value="Go for it!" />
+</form>
 {% endblock %}
 {% block explanation_choice %}
 <p><a href="{% url home %}">Regresar al inicio</a></p>

@@ -2,25 +2,25 @@
 # -*- coding: utf-8 -*-
 from django import forms
 
+chill_choices = (
+    ("horas_frio", "Horas Frío"),
+    ("richardson", "Unidades de Frío Richardson"),
+    ("richardson_sin_neg", "Unidades de Frío Richardson corregidas"),
+    ("shaltout", "Unidades de Frío Shaltout y Unrath"),
+    )
+
+heat_choices = (
+    ("dias_grado", "Días grado"),
+    ("growing_degree_hours", "Growing Degree Hours"),
+    )
+
 class ChillForm(forms.Form):
     
-    chill_choices = (
-        ("horas_frio", "Horas Frío"),
-        ("richardson", "Unidades de Frío Richardson"),
-        ("richardson_sin_neg", "Unidades de Frío Richardson corregidas"),
-        ("shaltout", "Unidades de Frio Shaltout y Unrath"),
-        )
-    
     chill_method = forms.ChoiceField(choices=chill_choices, label="Método")
-    temp = forms.DecimalField(label="Temperatura ºC")
+    temp = forms.DecimalField(label="Temperatura ºC",localize=True)
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False)
     
 class HeatForm(forms.Form):
-    
-    heat_choices = (
-        ("dias_grado", "Días grado"),
-        ("growing_degree_hours", "Growing Degree Hours"),
-        )
     
     heat_method = forms.ChoiceField(choices=heat_choices, label="Método")
     temp = forms.DecimalField(label="Temperatura ºC")
@@ -28,5 +28,6 @@ class HeatForm(forms.Form):
     
 class EvapoForm(forms.Form):
     
-    since = forms.DateField(label="Desde")
-    until = forms.DateField(label="Hasta")
+    temp = forms.DecimalField()
+    humidity = forms.DecimalField()
+    wind_speed = forms.DecimalField()

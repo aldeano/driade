@@ -1,6 +1,9 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
+import math
+
+from django import forms
 from django.shortcuts import render
 from calcs.forms import ChillForm, HeatForm, EvapoForm, heat_choices, chill_choices
 
@@ -87,7 +90,47 @@ def chill(request):
     
 def heat(request):
     form = HeatForm()
-    dicc = {"heat_form": form}
+    results = None
+    
+    if request.method == "POST":
+        form = HeatForm(request.POST)
+        if form.is_valid():
+            method = form.cleaned_data["heat_method"]
+            temp_calc = form.cleaned_data["temp"]
+            temp_base = form.cleaned_data["base_temp"]
+            temp_sup = form.cleaned_data["sup_temp"]
+            #comprobar si se usa temperatura base y superior
+            #personalizada o por defecto (10ºC a 30ºC)
+            if temp_base == None:
+                temp_base = 10
+            if temp_sup == None:
+                temp_sup = 30
+            #averigua qué método seleccionó el usuario y procede a obtener
+            #el resultado.
+            if method == "dias_grado":
+                if temp_base < temp_calc < temp_sup:
+                    heat_index = temp_calc - temp_base
+                else:
+                    heat_index = 0
+            elif method == "growing_degree_hours":
+                if 4 < temp_calc < 25:
+                    heat_index = 10.5*(1 + math.cos(math.pi + math.pi*((float(temp_calc) - 4)/21)))
+                elif 25 <= temp_calc < 36:
+                    heat_index = 21*(1 + math.cos((math.pi/2) + (math.pi/2)*((float(temp_calc) - 4)/21)))
+                else:
+                    heat_index = 0
+            else:
+                raise forms.ValidationError("Elige un método de la lista")
+            
+            #finalmente pone el resultado disponible para el template
+            for sublist in heat_choices:
+                if sublist[0] == method:
+                    print_method = sublist[1]
+                    break
+            results = "%s = %s" % (print_method, heat_index)
+    
+    dicc = {"heat_form": form, "results": results}
+    
     return render(request, "calcs/heat.html", dicc)
     
 def evapo(request):

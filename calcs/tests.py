@@ -17,14 +17,18 @@ class IndexTestCase(TestCase):
         self.assertEqual(resp_index_heat.status_code, 200)
         self.assertEqual(resp_index_evapo.status_code, 200)
     
-    def test_forms(self):
+
+class AlgoritsmTestCase(TestCase):
+    
+    def test_algoritms(self):
         
-        from calcs.forms import ChillForm, HeatForm
+        from calcs.algoritms import algoritms
+        #calcule good values first
+        values = [
+        (("Chill", "horas_frio", {"temp": 4, "base_temp": 7}), (1)),
+        (("Chill", "horas_frio", {"temp": 9, "base_temp": 7}), (0)),
+        ]
+        for attempt, result in values:
+            good_result = algoritms(attempt[0], attempt[1], attempt[2])
+            self.assertEquals(good_result, result)
         
-        '''Test to probe chill, heat and evapo forms
-        '''
-        #first test chill form
-        url = "/calcs/chill/"
-        chill_good_data = {"chill_method": "horas_frio", "temp": 6}
-        form = ChillForm(chill_good_data)
-        self.assertTrue(form.is_valid())

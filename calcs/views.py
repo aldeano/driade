@@ -1,14 +1,28 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
-
-import math
-
 from django import forms
 from django.shortcuts import render
 from calcs.forms import ChillForm, HeatForm, EvapoForm, heat_choices, chill_choices
+from calcs.algoritms import algoritms
 
 def home(request):
     return render(request, "calcs/calcs_index.html")
+    
+def phenology(request, purpose):
+    
+    results = None
+    #create string to call proper form
+    string_to_call = purpose + "Form"
+    #call form using the string
+    mod = __import__("calcs.forms", fromlist=[string_to_call])
+    
+    if request.method == "POST":
+        form_class = getattr(mod, string_to_call)(request.POST)
+        if form_class.is_valid():
+            phenologic_calc = purpose
+            chosen_method = form.cleaned_data["chosen_method"]
+            
+            
     
 def chill(request):
     form = ChillForm()

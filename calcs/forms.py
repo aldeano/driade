@@ -16,13 +16,14 @@ heat_choices = (
 
 class ChillForm(forms.Form):
     
-    chill_method = forms.ChoiceField(choices=chill_choices, label="Método")
+    chosen_method = forms.ChoiceField(choices=chill_choices, label="Método")
     temp = forms.DecimalField(label="Temperatura ºC",localize=True)
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False,localize=True)
+    sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,localize=True)
     
 class HeatForm(forms.Form):
     
-    heat_method = forms.ChoiceField(choices=heat_choices, label="Método")
+    chosen_method = forms.ChoiceField(choices=heat_choices, label="Método")
     temp = forms.DecimalField(label="Temperatura ºC")
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False,localize=True)
     sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,localize=True)

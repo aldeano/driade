@@ -9,12 +9,14 @@ def algoritms(phenologic_calc, method, kwdata):
     dicctionary'''
     method = method
     temp_calc = kwdata["temp"]
-    temp_base = kwdata["base_temp"]
-    
-    
+      
     if phenologic_calc == "Chill":
         
-        if method == "horas_frio":                
+        if method == "horas_frio":
+            if kwdata["base_temp"] == True:
+                temp_base = kwdata["base_temp"]                
+            else:
+                temp_base = 7.22
             if 0 < temp_calc < temp_base:
                 result = 1
             else:

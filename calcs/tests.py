@@ -6,16 +6,12 @@ class IndexTestCase(TestCase):
         
         '''Test to probe existence of each page
         '''
-        resp_index = self.client.get('/')
-        resp_index_calcs = self.client.get('/calcs/')
-        resp_index_chill = self.client.get('/calcs/chill/')
-        resp_index_heat = self.client.get('/calcs/heat/')
-        resp_index_evapo = self.client.get('/calcs/evapo/')
-        self.assertEqual(resp_index.status_code, 200)
-        self.assertEqual(resp_index_calcs.status_code, 200)
-        self.assertEqual(resp_index_chill.status_code, 200)
-        self.assertEqual(resp_index_heat.status_code, 200)
-        self.assertEqual(resp_index_evapo.status_code, 200)
+        url_list = ('/', '/calcs/', '/calcs/chill/', '/calcs/heat/', 
+        '/calcs/evapo/')
+        
+        for page in url_list:
+            resp = self.client.get(page)
+            self.assertEqual(resp.status_code, 200)
     
 
 class AlgoritsmTestCase(TestCase):
@@ -27,6 +23,7 @@ class AlgoritsmTestCase(TestCase):
         values = [
         (("Chill", "horas_frio", {"temp": 4, "base_temp": 7}), (1)),
         (("Chill", "horas_frio", {"temp": 9, "base_temp": 7}), (0)),
+        (("Chill", "richardson", {"temp": 9}), (1)),
         ]
         for attempt, result in values:
             good_result = algoritms(attempt[0], attempt[1], attempt[2])

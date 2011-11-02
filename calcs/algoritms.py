@@ -1,5 +1,6 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
+import math
 
 units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
     "shaltout": "uf", "dias_grado": "dg", "growing_degree_hours": "gdh"}
@@ -13,7 +14,7 @@ def algoritms(phenologic_calc, method, kwdata):
     if phenologic_calc == "Chill":
         
         if method == "horas_frio":
-            if kwdata["base_temp"] == True:
+            if "base_temp" in kwdata:
                 temp_base = kwdata["base_temp"]                
             else:
                 temp_base = 7.22
@@ -70,6 +71,17 @@ def algoritms(phenologic_calc, method, kwdata):
     elif phenologic_calc == "Heat":
         
         if method == "dias_grado":
+            #if the user don't put personalized values, use standard ones
+            #base temp 10ºC and superior temp 30ºC
+            if "base_temp" in kwdata:
+                temp_base = kwdata["base_temp"]                
+            else:
+                temp_base = 10
+            if "sup_temp" in kwdata:
+                temp_sup = kwdata["sup_temp"]                
+            else:
+                temp_sup = 30
+            #make the calcs
             if temp_base < temp_calc < temp_sup:
                 result = temp_calc - temp_base
             else:

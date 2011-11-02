@@ -30,6 +30,12 @@ class HeatForm(forms.Form):
     
 class EvapoForm(forms.Form):
     
-    temp = forms.DecimalField()
-    humidity = forms.DecimalField()
-    wind_speed = forms.DecimalField()
+    max_temp = forms.DecimalField(label="Temperatura máxima ºC")
+    min_temp = forms.DecimalField(label="Temperatura mínima ºC")
+    humidity = forms.DecimalField(label="Humedad relativa %")
+    wind_speed = forms.DecimalField(label="Velocidad del viento m/s")
+    air_pressure = forms.DecimalField(label="Presión atmosférica mb")
+    solar_radiation = forms.DecimalField(label="Radiación solar MJ m-2 día-1")
+    latitude = forms.DecimalField(label="Latitud º")
+    altitude = forms.DecimalField(label="Altura sobre el nivel del mar m")
+    day = forms.DateField(label="Fecha")

@@ -38,4 +38,4 @@ class EvapoForm(forms.Form):
     solar_radiation = forms.DecimalField(label="Radiación solar MJ m-2 día-1")
     latitude = forms.DecimalField(label="Latitud º")
     altitude = forms.DecimalField(label="Altura sobre el nivel del mar m")
-    day = forms.DateField(label="Fecha")
+    day = forms.DateField(label="Fecha",input_formats)

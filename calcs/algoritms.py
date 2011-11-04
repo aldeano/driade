@@ -95,5 +95,15 @@ def algoritms(phenologic_calc, method, kwdata):
                 result = 0
         else:
             raise forms.ValidationError("Elige un método de la lista")
+            
+    elif phenologic_calc == "Evapo":
+        
+        #First obtain diary net radiation
+        day = kwdata["day"]
+        julian_date = int((day - datetime.date(day.year, 1, 1)))+1
+        relative_distance = 
+        
+    else:
+        raise forms.ValidationError("Elige un método de la lista")
     
     return result

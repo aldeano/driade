@@ -21,7 +21,7 @@ DATABASES = {
 
 TIME_ZONE = 'America/Santiago'
 
-LANGUAGE_CODE = 'es-cl'
+LANGUAGE_CODE = 'es'
 
 SITE_ID = 1
 
@@ -133,3 +133,4 @@ LOGGING = {
         },
     }
 }
+DATE_INPUT_FORMATS = ('%d/%m/%Y', '%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y')

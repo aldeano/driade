@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 import math
+import datetime
 
 units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
     "shaltout": "uf", "dias_grado": "dg", "growing_degree_hours": "gdh"}
@@ -100,8 +101,24 @@ def algoritms(phenologic_calc, method, kwdata):
         
         #First obtain diary net radiation
         day = kwdata["day"]
-        julian_date = int((day - datetime.date(day.year, 1, 1)))+1
-        relative_distance = 
+        julian_date = int((day - datetime.date(day.year, 1, 1))) + 1
+        relative_distance = 1 + 0.033 * math.cos((2 * math.pi / 365)*julian_date)
+        solar_decline = 0.409 * math.sin((2 * math.pi / 365) * julian_date - 1.39)
+        lat_grad = kwdata["latitude"]
+        lat_rad = math.pi/180 * lat_grad
+        sun_angle = math.acos(-math.tan(lat_rad)*math.tan(solar_decline))
+        extrat_rad = ((24*60)/math.pi)*0.082*relative_distance*(sun_angle*math.sin(lat_rad)*math.sin(solar_decline)+math.cos(lat_rad)*math.cos(solar_decline)*math.sin(sun_angle))
+        altitude = kwdata ["altitude"]
+        clear_day_rad = (0.75 + 2e-5 * altitude)*extrat_rad
+        max_temp = kwdata["max_temp"] + 273.15
+        min_temp = kwdata["min_temp"] + 273.15
+        mid_temp = (max_temp + min_temp)/2 - 273.15
+        solar_rad = kwdata["solar_radiation"]
+        humidity = kwdata["humidity"]
+        vapor_pressure = (humidity*0.6108*math.exp((17.27*mid_temp)/(mid_temp + 237.3)))/100
+        net_long_rad = 4.903e-9*((max_temp**4 + min_temp**4)/2)*(0.34-0.14*math.sqrt(vapor_pressure))*(1.35*(solar_rad/clear_day_rad)-0.35)
+        net_short_rad = (1-0.23)*solar_rad
+        net_radiation = net_short_rad - net_long_rad #we got it!!!
         
     else:
         raise forms.ValidationError("Elige un método de la lista")

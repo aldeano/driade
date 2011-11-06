@@ -1,6 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 from django import forms
+from driade.settings import DATE_INPUT_FORMATS
 
 chill_choices = (
     ("horas_frio", "Horas Frío"),
@@ -38,4 +39,4 @@ class EvapoForm(forms.Form):
     solar_radiation = forms.DecimalField(label="Radiación solar MJ m-2 día-1")
     latitude = forms.DecimalField(label="Latitud º")
     altitude = forms.DecimalField(label="Altura sobre el nivel del mar m")
-    day = forms.DateField(label="Fecha",input_formats)
+    day = forms.DateField(label="Fecha",input_formats=DATE_INPUT_FORMATS)

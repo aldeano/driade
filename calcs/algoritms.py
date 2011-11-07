@@ -115,10 +115,20 @@ def algoritms(phenologic_calc, method, kwdata):
         mid_temp = (max_temp + min_temp)/2 - 273.15
         solar_rad = kwdata["solar_radiation"]
         humidity = kwdata["humidity"]
-        vapor_pressure = (humidity*0.6108*math.exp((17.27*mid_temp)/(mid_temp + 237.3)))/100
+        sat_vapor_pressure = 0.6108*math.exp((17.27*mid_temp)/(mid_temp + 237.3))
+        vapor_pressure = (humidity*sat_vapor_pressure)/100
         net_long_rad = 4.903e-9*((max_temp**4 + min_temp**4)/2)*(0.34-0.14*math.sqrt(vapor_pressure))*(1.35*(solar_rad/clear_day_rad)-0.35)
         net_short_rad = (1-0.23)*solar_rad
         net_radiation = net_short_rad - net_long_rad #we got it!!!
+        #now got the evapotranspiration
+        air_pressure = kwdata["air_pressure"]
+        wind_speed = kwdata["wind_speed"]
+        latent_heat = 2.501 - mid_temp * (2.361e-3)
+        psicometric_constant = 0.00163*(air_pressure/latent_heat)
+        curve_slope = (4098*sat_vapor_pressure)/((mid_temp + 237.3)**2)
+        pressure_deficit = sat_vapor_pressure - ((1-humidity)/100)
+        
+        result = (0.408*curve_slope*net_dariation+psicometric_constant*(900/(mid_temp+273))*wind_speed*pressure_deficit)/(curve_slope+psicometric_constant*(1+0.34*wind_speed))
         
     else:
         raise forms.ValidationError("Elige un método de la lista")

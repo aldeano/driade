@@ -107,8 +107,10 @@ def algoritms(phenologic_calc, method, kwdata):
         lat_grad = kwdata["latitude"]
         lat_rad = math.pi/180 * lat_grad
         sun_angle = math.acos(-math.tan(lat_rad)*math.tan(solar_decline))
+        #first radiation index, extraterrestrial radiation
         extrat_rad = ((24*60)/math.pi)*0.082*relative_distance*(sun_angle*math.sin(lat_rad)*math.sin(solar_decline)+math.cos(lat_rad)*math.cos(solar_decline)*math.sin(sun_angle))
         altitude = kwdata ["altitude"]
+        #second one, clear day radiation
         clear_day_rad = (0.75 + 2e-5 * altitude)*extrat_rad
         max_temp = kwdata["max_temp"] + 273.15
         min_temp = kwdata["min_temp"] + 273.15
@@ -117,9 +119,12 @@ def algoritms(phenologic_calc, method, kwdata):
         humidity = kwdata["humidity"]
         sat_vapor_pressure = 0.6108*math.exp((17.27*mid_temp)/(mid_temp + 237.3))
         vapor_pressure = (humidity*sat_vapor_pressure)/100
+        #now mix extraterrestrial, clear day & solar radiation to get net long radiation
         net_long_rad = 4.903e-9*((max_temp**4 + min_temp**4)/2)*(0.34-0.14*math.sqrt(vapor_pressure))*(1.35*(solar_rad/clear_day_rad)-0.35)
+        #Net short radiation, easy one
         net_short_rad = (1-0.23)*solar_rad
-        net_radiation = net_short_rad - net_long_rad #we got it!!!
+        net_radiation = net_short_rad - net_long_rad
+        #we got it!!!
         #now got the evapotranspiration
         air_pressure = kwdata["air_pressure"]
         wind_speed = kwdata["wind_speed"]

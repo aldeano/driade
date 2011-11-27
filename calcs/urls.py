@@ -5,5 +5,6 @@ urlpatterns = patterns('',
     url(r'^chill/$', chill, name='chill'),
     url(r'^heat/$', heat, name='heat'),
     url(r'^evapo/$', evapo, name='evapo'),
+    url(r'^new_calc/$', phenology, name='fenologia'),
     url(r'^$', home, name='home_calcs'),
 )

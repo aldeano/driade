@@ -15,6 +15,7 @@ def phenology(request, purpose):
     string_to_call = purpose + "Form"
     #call form using the string
     mod = __import__("calcs.forms", fromlist=[string_to_call])
+    form_class = getattr(mod, string_to_call)
     
     if request.method == "POST":
         form_class = getattr(mod, string_to_call)(request.POST)
@@ -31,7 +32,7 @@ def chill(request):
     if request.method == "POST":
         form = ChillForm(request.POST)
         if form.is_valid():
-            method = form.cleaned_data["chill_method"]
+            method = form.cleaned_data["chosen_method"]
             temp_calc = form.cleaned_data["temp"]
             temp_base = form.cleaned_data["base_temp"]
             #comprobar si se usa temperatura base personalizada o
@@ -109,7 +110,7 @@ def heat(request):
     if request.method == "POST":
         form = HeatForm(request.POST)
         if form.is_valid():
-            method = form.cleaned_data["heat_method"]
+            method = form.cleaned_data["chosen_method"]
             temp_calc = form.cleaned_data["temp"]
             temp_base = form.cleaned_data["base_temp"]
             temp_sup = form.cleaned_data["sup_temp"]

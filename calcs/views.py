@@ -21,10 +21,9 @@ def phenology(request, purpose):
         form_class = getattr(mod, string_to_call)(request.POST)
         if form_class.is_valid():
             phenologic_calc = purpose
-            chosen_method = form.cleaned_data["chosen_method"]
+            data = None
+            results = algoritms(phenologic_calc, form_class.cleaned_data)
             
-            
-    
 def chill(request):
     form = ChillForm()
     results = None

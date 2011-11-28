@@ -6,16 +6,16 @@ from datetime import datetime, timedelta
 units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
     "shaltout": "uf", "dias_grado": "dg", "growing_degree_hours": "gdh"}
 
-def algoritms(phenologic_calc, method, kwdata):
-    '''calc's algoritms, it needs method and data inside a
+def algoritms(phenologic_calc, kwdata):
+    '''calc's algoritms, it needs kwdata["chosen_method"] and data inside a
     dictionary'''
-    method = method
+    kwdata["chosen_method"] = kwdata["chosen_method"]
       
     if phenologic_calc == "Chill":
         
         temp_calc = kwdata["temp"]
         
-        if method == "horas_frio":
+        if kwdata["chosen_method"] == "horas_frio":
             if "base_temp" in kwdata:
                 temp_base = kwdata["base_temp"]                
             else:
@@ -24,7 +24,7 @@ def algoritms(phenologic_calc, method, kwdata):
                 result = 1
             else:
                 result =0
-        elif method == "richardson":
+        elif kwdata["chosen_method"] == "richardson":
             if temp_calc <= 1.4:
                 result = 0
             elif 1.4 < temp_calc <= 2.4:
@@ -39,7 +39,7 @@ def algoritms(phenologic_calc, method, kwdata):
                 result = -0.5
             else:
                 result = -1
-        elif method == "richardson_sin_neg":
+        elif kwdata["chosen_method"] == "richardson_sin_neg":
             if 1.4 < temp_calc <= 2.4:
                 result = 0.5
             elif 2.4 < temp_calc <= 9.1:
@@ -48,7 +48,7 @@ def algoritms(phenologic_calc, method, kwdata):
                 result = 0.5
             else:
                 result = 0
-        elif method == "shaltout":
+        elif kwdata["chosen_method"] == "shaltout":
             if temp_calc <= 1.6:
                 result = 0
             elif 1.6 < temp_calc <= 7.2:
@@ -74,7 +74,7 @@ def algoritms(phenologic_calc, method, kwdata):
         
         temp_calc = kwdata["temp"]
         
-        if method == "dias_grado":
+        if kwdata["chosen_method"] == "dias_grado":
             #if the user don't put personalized values, use standard ones
             #base temp 10ºC and superior temp 30ºC
             if "base_temp" in kwdata:
@@ -90,7 +90,7 @@ def algoritms(phenologic_calc, method, kwdata):
                 result = temp_calc - temp_base
             else:
                 result = 0
-        elif method == "growing_degree_hours":
+        elif kwdata["chosen_method"] == "growing_degree_hours":
             if 4 < temp_calc < 25:
                 result = 10.5*(1 + math.cos(math.pi + math.pi*((float(temp_calc) - 4)/21)))
             elif 25 <= temp_calc < 36:
@@ -102,7 +102,7 @@ def algoritms(phenologic_calc, method, kwdata):
             
     elif phenologic_calc == "Evapo":
         
-        if method == "penman-monteith-fao":        
+        if kwdata["chosen_method"] == "penman-monteith-fao":        
             #First obtain diary net radiation
             day = kwdata["day"]
             date_calc = datetime.strptime(day, "%d/%m/%Y")

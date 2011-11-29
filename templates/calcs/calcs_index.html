@@ -1,5 +1,13 @@
 {% extends 'index.html' %}
-{% block contenido %}
-<h2>Esta es la pag de los cálculos</h2>
+{% block form_choice %}
+{% if results or results == 0%}
+    Resultado: {{ results }}
+{% endif %}
+<form action="{{ form_url }}" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Go for it!" />
+</form>
+{% endblock %}
+{% block explanation_choice %}
 <p><a href="{% url home %}">Regresar al inicio</a></p>
 {% endblock %}

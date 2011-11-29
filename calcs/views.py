@@ -3,26 +3,31 @@
 from django import forms
 from django.shortcuts import render
 from calcs.forms import ChillForm, HeatForm, EvapoForm, heat_choices, chill_choices
-from calcs.algoritms import algoritms
+from calcs.algoritms import *
 
 def home(request):
     return render(request, "calcs/calcs_index.html")
     
-def phenology(request, purpose):
+def phenology(request, purpose=None):
     
     results = None
     #create string to call proper form
     string_to_call = purpose + "Form"
     #call form using the string
     mod = __import__("calcs.forms", fromlist=[string_to_call])
-    form_class = getattr(mod, string_to_call)
+    form = getattr(mod, string_to_call)
+    form_url = "/calcs/" + purpose + "/"
     
     if request.method == "POST":
-        form_class = getattr(mod, string_to_call)(request.POST)
-        if form_class.is_valid():
+        form = getattr(mod, string_to_call)(request.POST)
+        if form.is_valid():
             phenologic_calc = purpose
-            data = None
-            results = algoritms(phenologic_calc, form_class.cleaned_data)
+            results = algoritms(phenologic_calc, form.cleaned_data)
+            results = str(results) + " " + units[form.cleaned_data["chosen_method"]]
+    
+    dicc = {"form": form, "form_url": form_url, "results": results}
+    
+    return render(request, "calcs/calcs_index.html", dicc)
             
 def chill(request):
     form = ChillForm()

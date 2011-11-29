@@ -7,23 +7,21 @@ units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
     "shaltout": "uf", "dias_grado": "dg", "growing_degree_hours": "gdh"}
 
 def algoritms(phenologic_calc, kwdata):
-    '''calc's algoritms, it needs kwdata["chosen_method"] and data inside a
-    dictionary'''
-    kwdata["chosen_method"] = kwdata["chosen_method"]
+    '''calc's algoritms, it needs data inside a dictionary'''
       
     if phenologic_calc == "Chill":
         
         temp_calc = kwdata["temp"]
         
         if kwdata["chosen_method"] == "horas_frio":
-            if "base_temp" in kwdata:
+            if kwdata["base_temp"] != None:
                 temp_base = kwdata["base_temp"]                
             else:
                 temp_base = 7.22
             if 0 < temp_calc < temp_base:
                 result = 1
             else:
-                result =0
+                result = 0
         elif kwdata["chosen_method"] == "richardson":
             if temp_calc <= 1.4:
                 result = 0
@@ -77,11 +75,11 @@ def algoritms(phenologic_calc, kwdata):
         if kwdata["chosen_method"] == "dias_grado":
             #if the user don't put personalized values, use standard ones
             #base temp 10ºC and superior temp 30ºC
-            if "base_temp" in kwdata:
+            if kwdata["base_temp"] != None:
                 temp_base = kwdata["base_temp"]                
             else:
                 temp_base = 10
-            if "sup_temp" in kwdata:
+            if kwdata["sup_temp"] != None:
                 temp_sup = kwdata["sup_temp"]                
             else:
                 temp_sup = 30

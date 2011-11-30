@@ -6,7 +6,7 @@ class IndexTestCase(TestCase):
         
         '''Test to probe existence of each page
         '''
-        url_list = ('/', '/calcs/', '/calcs/Chill/', '/calcs/Heat/', 
+        url_list = ('/', '/calcs/Chill/', '/calcs/Heat/', 
         '/calcs/Evapo/')
         
         for page in url_list:

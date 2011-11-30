@@ -3,6 +3,17 @@
 import math
 from datetime import datetime, timedelta
 
+explanations = {"horas_frio": "Horas bajo cierta temperatura, si no se " \
+    "detalla se ocupa 7,22 como estandar", 
+    "richardson": "eso", 
+    "richardson_sin_neg": "lo otro", 
+    "shaltout": "ni eso tampoco", 
+    "dias_grado": "Grados sobre cierta temperatura, si no se detalla se " \
+    "ocupa 10 como estandar",
+    "growing-degree_hours": "Complicada explicación", 
+    "evapotranspiración": "Milímetros de agua evaporada por una superficie " \
+    "estandar de pasto en condiciones ideales"}
+
 units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
     "shaltout": "uf", "dias_grado": "dg", "growing_degree_hours": "gdh"}
 

@@ -3,7 +3,7 @@
 {% if results or results == 0%}
     Resultado: {{ results }}
 {% endif %}
-<form action="{{ form_url }}" method="post">{% csrf_token %}
+<form action="{{ form_url }}" method="post" id="calcs_form">{% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Go for it!" />
 </form>

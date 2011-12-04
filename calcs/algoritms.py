@@ -3,16 +3,26 @@
 import math
 from datetime import datetime, timedelta
 
-explanations = {"horas_frio": "Horas bajo cierta temperatura, si no se " \
-    "detalla se ocupa 7,22 como estandar", 
-    "richardson": "eso", 
-    "richardson_sin_neg": "lo otro", 
-    "shaltout": "ni eso tampoco", 
-    "dias_grado": "Grados sobre cierta temperatura, si no se detalla se " \
-    "ocupa 10 como estandar",
-    "growing-degree_hours": "Complicada explicación", 
+explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
+    "detalla se ocupa 7,22º y 0º C como estandar", 
+    "richardson": "Cuantificación del frío acumulado según los trabajos " \
+    "de Richardson (1974) en los cuales se asigna mayor efecto a temperaturas " \
+    "cercanas a 5º C", 
+    "richardson_sin_neg": "Cuantificación del frío acumulado según los trabajos " \
+    "de Richardson (1974) en los cuales se asigna mayor efecto a temperaturas " \
+    "cercanas a 5º C. Sin efectos negativos, adecuado para zonas con inviernos", \
+    "suaves.", 
+    "shaltout": "Cuantificación del frío acumulado según los trabajos " \
+    "de Shaltout (1983) en los cuales se asigna mayor efecto a temperaturas " \
+    "cercanas a 7,2º C",
+    "dias_grado": "Grados ºC entre ciertas temperaturas, si no se detalla " \
+    "se ocupa 10º y 30º C como estandar",
+    "growing-degree_hours": "Estimación del efecto de la tempratura sobre " \
+    "el desarrollo fenológico basado en una curva cuyo óptimo está en los " \
+    "25º C. Basado en el trabajo de Anderson & Richardson (1986)", 
     "evapotranspiración": "Milímetros de agua evaporada por una superficie " \
-    "estandar de pasto en condiciones ideales"}
+    "estandar de pasto en condiciones ideales. Se usa el método propuesto " \
+    "por FAO, publicación nº 56",}
 
 units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
     "shaltout": "uf", "dias_grado": "dg", "growing_degree_hours": "gdh"}

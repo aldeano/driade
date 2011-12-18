@@ -10,7 +10,7 @@ explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
     "cercanas a 5º C", 
     "richardson_sin_neg": "Cuantificación del frío acumulado según los trabajos " \
     "de Richardson (1974) en los cuales se asigna mayor efecto a temperaturas " \
-    "cercanas a 5º C. Sin efectos negativos, adecuado para zonas con inviernos", \
+    "cercanas a 5º C. Sin efectos negativos, adecuado para zonas con inviernos" \
     "suaves.", 
     "shaltout": "Cuantificación del frío acumulado según los trabajos " \
     "de Shaltout (1983) en los cuales se asigna mayor efecto a temperaturas " \
@@ -126,15 +126,21 @@ def algoritms(phenologic_calc, kwdata):
             day = kwdata["day"]
             date_calc = datetime.strptime(day, "%d/%m/%Y")
             #To get the julian date compare the first day of the year and the given date
-            #Get the seconds of that difference and divide by all the seconds in a day - 86400 - and plus one
-            julian_date = (date_calc - datetime(date_calc.year, 1, 1)).total_seconds()/86400 + 1
-            relative_distance = 1 + 0.033 * math.cos((2 * math.pi / 365)*julian_date)
-            solar_decline = 0.409 * math.sin((2 * math.pi / 365) * julian_date - 1.39)
+            #Get the seconds of that difference and divide by all the 
+            #seconds in a day - 86400 - and plus one
+            julian_date = (date_calc - datetime(date_calc.year, 1, 1)).total_seconds() \
+                /86400 + 1
+            relative_distance = 1 + 0.033 * math.cos((2 * math.pi / 365) \
+                *julian_date)
+            solar_decline = 0.409 * math.sin((2 * math.pi / 365) * \
+                julian_date - 1.39)
             lat_grad = kwdata["latitude"]
             lat_rad = math.pi/180 * lat_grad
             sun_angle = math.acos(-math.tan(lat_rad)*math.tan(solar_decline))
             #first radiation index, extraterrestrial radiation
-            extrat_rad = ((24*60)/math.pi)*0.082*relative_distance*(sun_angle*math.sin(lat_rad)*math.sin(solar_decline)+math.cos(lat_rad)*math.cos(solar_decline)*math.sin(sun_angle))
+            extrat_rad = ((24*60)/math.pi)*0.082*relative_distance* \
+                (sun_angle*math.sin(lat_rad)*math.sin(solar_decline)+ \
+                math.cos(lat_rad)*math.cos(solar_decline)*math.sin(sun_angle))
             altitude = kwdata ["altitude"]
             #second one, clear day radiation
             clear_day_rad = (0.75 + 2e-5 * altitude)*extrat_rad
@@ -143,10 +149,13 @@ def algoritms(phenologic_calc, kwdata):
             mid_temp = (max_temp + min_temp)/2 - 273.15
             solar_rad = kwdata["solar_radiation"]
             humidity = kwdata["humidity"]
-            sat_vapor_pressure = 0.6108*math.exp((17.27*mid_temp)/(mid_temp + 237.3))
+            sat_vapor_pressure = 0.6108*math.exp((17.27*mid_temp)/(mid_temp \
+                + 237.3))
             vapor_pressure = (humidity*sat_vapor_pressure)/100
             #now mix extraterrestrial, clear day & solar radiation to get net long radiation
-            net_long_rad = 4.903e-9*((max_temp**4 + min_temp**4)/2)*(0.34-0.14*math.sqrt(vapor_pressure))*(1.35*(solar_rad/clear_day_rad)-0.35)
+            net_long_rad = 4.903e-9*((max_temp**4 + min_temp**4)/2)*(0.34 \
+                -0.14*math.sqrt(vapor_pressure))*(1.35*(solar_rad/clear_day_rad) \
+                -0.35)
             #net short radiation, easy one
             net_short_rad = (1-0.23)*solar_rad
             net_radiation = net_short_rad - net_long_rad
@@ -159,7 +168,9 @@ def algoritms(phenologic_calc, kwdata):
             curve_slope = (4098*sat_vapor_pressure)/((mid_temp + 237.3)**2)
             pressure_deficit = sat_vapor_pressure - vapor_pressure
             
-            result = (0.408*curve_slope*net_radiation+psicometric_constant*(900/(mid_temp+273))*wind_speed*pressure_deficit)/(curve_slope+psicometric_constant*(1+0.34*wind_speed))
+            result = (0.408*curve_slope*net_radiation+psicometric_constant* \
+                (900/(mid_temp+273))*wind_speed*pressure_deficit)/(curve_slope+ \
+                psicometric_constant*(1+0.34*wind_speed))
             
         else:
             raise forms.ValidationError("Elige un método de la lista")

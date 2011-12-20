@@ -20,7 +20,7 @@ explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
     "growing-degree_hours": "Estimación del efecto de la tempratura sobre " \
     "el desarrollo fenológico basado en una curva cuyo óptimo está en los " \
     "25º C. Basado en el trabajo de Anderson & Richardson (1986)", 
-    "evapotranspiración": "Milímetros de agua evaporada por una superficie " \
+    "evapotranspiracion": "Milímetros de agua evaporada por una superficie " \
     "estandar de pasto en condiciones ideales. Se usa el método propuesto " \
     "por FAO, publicación nº 56",}
 

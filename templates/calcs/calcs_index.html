@@ -1,5 +1,8 @@
 {% extends 'index.html' %}
 {% block titulo %}Cálculos | {% endblock %}
+{% block jscript %}
+<script type="text/javascript" src="{{ STATIC_URL }}form_dinamico.js"></script>
+{% endblock %}
 {% block form_choice %}
 {% if results or results == 0%}
     Resultado: {{ results }}
@@ -10,5 +13,6 @@
 </form>
 {% endblock %}
 {% block explanation_choice %}
+{{ explanation }}
 <p><a href="{% url home %}">Regresar al inicio</a></p>
 {% endblock %}

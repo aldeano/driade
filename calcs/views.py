@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.shortcuts import render
+from django.http import HttpResponse
 from calcs.forms import ChillForm, HeatForm, EvapoForm, heat_choices, chill_choices
 from calcs.algoritms import *
    
@@ -35,4 +36,6 @@ def phenology(request, purpose=None):
 
 def ajax_expl(request, method):
     #Choose the correct explanation for each method through ajax request.
-    pass
+    if request.is_ajax():
+        explanation = explanations[method]
+    return HttpResponse(explanation)

@@ -15,6 +15,9 @@ explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
     "shaltout": "Cuantificación del frío acumulado según los trabajos " \
     "de Shaltout (1983) en los cuales se asigna mayor efecto a temperaturas " \
     "cercanas a 7,2º C",
+    "bajas_necesidade": "Cuantificación del frío acumulado según los trabajos " \
+    "de Gilreath y Buchanan (1981) en los cuales se asigna mayor efecto a temperaturas " \
+    "cercanas a 10º C",
     "dias_grado": "Grados ºC entre ciertas temperaturas, si no se detalla " \
     "se ocupa 10º y 30º C como estandar",
     "growing-degree_hours": "Estimación del efecto de la tempratura sobre " \
@@ -25,7 +28,8 @@ explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
     "por FAO, publicación nº 56",}
 
 units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
-    "shaltout": "uf", "dias_grado": "dg", "growing_degree_hours": "gdh"}
+    "shaltout": "uf", "bajas_necesidades": "uf", "dias_grado": "dg", 
+    "growing_degree_hours": "gdh"}
 
 def algoritms(phenologic_calc, kwdata):
     '''calc's algoritms, it needs data inside a dictionary'''
@@ -86,6 +90,21 @@ def algoritms(phenologic_calc, kwdata):
                 result = -1.5
             else:
                 result = -2
+        elif kwdata["chosen_method"] == "bajas_necesidades":
+            if temp_calc <= 1.7:
+                result = 0
+            elif 1.7 < temp_calc < 8:
+                result = 0.5
+            elif 8 <= temp_calc < 14:
+                result = 1
+            elif 14 <= temp_calc < 17:
+                result = 0.5
+            elif 17 <= temp_calc < 19.5:
+                result = 0
+            elif 19.5 <= temp_calc < 21.5:
+                result = -0.5
+            else:
+                result = -1
         else:
             raise forms.ValidationError("Elige un método de la lista")
                 

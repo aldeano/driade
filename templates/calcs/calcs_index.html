@@ -17,6 +17,8 @@
 </form>
 {% endblock %}
 {% block explanation_choice %}
-{{ explanation }}
+<div id="explanation_text">
+    {{ explanation }}    
+</div>
 <p><a href="{% url home %}">Regresar al inicio</a></p>
 {% endblock %}

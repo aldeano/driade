@@ -16,7 +16,16 @@
                 $("label[for|='id_sup_temp']").show("slow");
             }
             // Search for the explanation of chosen method
-            $.get("/calcs/explanation/" + eleccion + "/");
+            $.get("/calcs/explanation/" + eleccion + "/", function (data) {
+                if (data)
+                {
+                    $("#explanation_text").html(data);
+                }
+                else
+                {
+                    $("#explanation_text").html("sin explicación")
+                }
+            });
         });
     };
 })(jQuery);

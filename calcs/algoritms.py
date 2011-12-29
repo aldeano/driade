@@ -10,17 +10,17 @@ explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
     "cercanas a 5º C", 
     "richardson_sin_neg": "Cuantificación del frío acumulado según los trabajos " \
     "de Richardson (1974) en los cuales se asigna mayor efecto a temperaturas " \
-    "cercanas a 5º C. Sin efectos negativos, adecuado para zonas con inviernos" \
+    "cercanas a 5º C. Sin efectos negativos, adecuado para zonas con inviernos " \
     "suaves.", 
     "shaltout": "Cuantificación del frío acumulado según los trabajos " \
-    "de Shaltout (1983) en los cuales se asigna mayor efecto a temperaturas " \
+    "de Shaltout & Unrath (1983) en los cuales se asigna mayor efecto a temperaturas " \
     "cercanas a 7,2º C",
-    "bajas_necesidade": "Cuantificación del frío acumulado según los trabajos " \
-    "de Gilreath y Buchanan (1981) en los cuales se asigna mayor efecto a temperaturas " \
+    "bajas_necesidades": "Cuantificación del frío acumulado según los trabajos " \
+    "de Gilreath & Buchanan (1981) en los cuales se asigna mayor efecto a temperaturas " \
     "cercanas a 10º C",
     "dias_grado": "Grados ºC entre ciertas temperaturas, si no se detalla " \
     "se ocupa 10º y 30º C como estandar",
-    "growing-degree_hours": "Estimación del efecto de la tempratura sobre " \
+    "growing_degree_hours": "Estimación del efecto de la tempratura sobre " \
     "el desarrollo fenológico basado en una curva cuyo óptimo está en los " \
     "25º C. Basado en el trabajo de Anderson & Richardson (1986)", 
     "evapotranspiracion": "Milímetros de agua evaporada por una superficie " \

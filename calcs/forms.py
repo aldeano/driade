@@ -20,21 +20,21 @@ class TempField(forms.DecimalField):
     
     def clean(self, value):
         value = super(TempField, self).clean(value)
-        if -20 < value < 60:
-            raise ValidationError
+        if value > 60 or value < -20:
+            raise forms.ValidationError("Temperatura fuera de rango")
         else:
             return value
         
 class ChillForm(forms.Form):
     
-    chosen_method = forms.ChoiceField(choices=chill_choices, label="Método", initial='horas_frio')
+    chosen_method = forms.ChoiceField(choices=chill_choices, label="Método")
     temp = forms.DecimalField(label="Temperatura ºC",localize=True)
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False,localize=True)
     sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,localize=True)
     
 class HeatForm(forms.Form):
     
-    chosen_method = forms.ChoiceField(choices=heat_choices, label="Método", initial="dias_grado")
+    chosen_method = forms.ChoiceField(choices=heat_choices, label="Método")
     temp = TempField(label="Temperatura ºC")
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False,localize=True)
     sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,localize=True)

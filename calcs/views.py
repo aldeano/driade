@@ -28,6 +28,8 @@ def phenology(request, purpose=None):
             phenologic_calc = purpose
             results = algoritms(phenologic_calc, form.cleaned_data)
             results = str(results) + " " + units[form.cleaned_data["chosen_method"]]
+            string_choice = purpose.lower() + "_choices"
+            form = getattr(mod, string_to_call)(initial={'chosen_method': eval(string_choice)[0][0]})
     
     dicc = {"form": form, "form_url": form_url, "results": results,
     "explanation": explanation}

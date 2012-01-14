@@ -26,6 +26,9 @@ class ChillForm(forms.Form):
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
     sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
+        
+    class Media:
+        css = {'all': ('forms.css',)}
     
 class HeatForm(forms.Form):
     
@@ -36,6 +39,9 @@ class HeatForm(forms.Form):
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
     sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
+            
+    class Media:
+        css = {'all': ('forms.css',)}
     
 class EvapoForm(forms.Form):
     
@@ -49,10 +55,13 @@ class EvapoForm(forms.Form):
         validators=[MaxValueValidator(30), MinValueValidator(0)])
     air_pressure = forms.DecimalField(label="Presión atmosférica mb",
         validators=[MaxValueValidator(1030), MinValueValidator(0)])
-    solar_radiation = forms.DecimalField(label="Radiación solar MJ m-2 día-1")
-        validators=[MaxValueValidator(50), MinValueValidator(0)]
+    solar_radiation = forms.DecimalField(label="Radiación solar MJ m-2 día-1",
+        validators=[MaxValueValidator(50), MinValueValidator(0)])
     latitude = forms.DecimalField(label="Latitud º",
         validators=[MaxValueValidator(90), MinValueValidator(-90)])
     altitude = forms.DecimalField(label="Altura sobre el nivel del mar m",
         validators=[MaxValueValidator(3000), MinValueValidator(0)])
     day = forms.DateField(label="Fecha",input_formats=DATE_INPUT_FORMATS)
+        
+    class Media:
+        css = {'all': ('forms.css',)}

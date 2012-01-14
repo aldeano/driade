@@ -1,20 +1,37 @@
 from django.test import TestCase
 
 class IndexTestCase(TestCase):
+
+    url_list = ('/', '/calcs/Chill/', '/calcs/Heat/', 
+        '/calcs/Evapo/')
+    
+    bad_urls = ('/dsbkjdfb/', '/calcs/casdkfjh/')
     
     def test_index(self):
-        
         '''Test to probe existence of each page
         '''
-        url_list = ('/', '/calcs/Chill/', '/calcs/Heat/', 
-        '/calcs/Evapo/')
-        
-        for page in url_list:
+
+        for page in self.url_list:
             resp = self.client.get(page)
             self.assertEqual(resp.status_code, 200)
     
-
-class AlgoritsmTestCase(TestCase):
+    def test_bad_urls(self):
+        ''' it does what it said, test erroneous urls waiting for a 
+        404 message'''
+        
+        for page in self.bad_urls:
+            resp = self.client.get(page)
+            self.assertEqual(resp.status_code, 404)
+    
+    def test_post(self):
+        '''test post views and forms
+        '''
+        resp = self.client.post('/calcs/Chill/', {'chosen_method': 'horas_frio',
+        'temp': 5})
+        self.assertEqual(resp.status_code, 200)
+        #self.assertEqual(resp['results'], 1)
+    
+class AlgoritmsTestCase(TestCase):
     
     def test_algoritms(self):
         
@@ -50,4 +67,3 @@ class AlgoritsmTestCase(TestCase):
         for argument, result in values:
             good_result = algoritms(argument[0], argument[1])
             self.assertEquals(good_result, result)
-        

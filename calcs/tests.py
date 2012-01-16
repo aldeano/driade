@@ -29,7 +29,8 @@ class IndexTestCase(TestCase):
         resp = self.client.post('/calcs/Chill/', {'chosen_method': 'horas_frio',
         'temp': 5})
         self.assertEqual(resp.status_code, 200)
-        #self.assertEqual(resp['results'], 1)
+        self.assertTrue('results' in resp.context)
+        self.assertEqual(resp.context['results'], '1 hf')
     
 class AlgoritmsTestCase(TestCase):
     

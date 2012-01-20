@@ -3,13 +3,13 @@
 from django import forms
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from calcs.forms import ChillForm, HeatForm, EvapoForm, heat_choices, chill_choices
+from calcs.forms import chillForm, heatForm, evapoForm, heat_choices, chill_choices, evapo_choices
 from calcs.algoritms import *
    
 def phenology(request, purpose=None):
     
     #check for a real purpose
-    potential_purposes = ["Chill", "Heat", "Evapo"]
+    potential_purposes = ["chill", "heat", "evapo"]
     if purpose not in potential_purposes:
         raise Http404
         
@@ -38,7 +38,7 @@ def phenology(request, purpose=None):
             phenologic_calc = purpose
             results = algoritms(phenologic_calc, form.cleaned_data)
             results = str(results) + " " + units[form.cleaned_data["chosen_method"]]
-            string_choice = purpose.lower() + "_choices"
+            string_choice = purpose + "_choices"
             form = getattr(mod, string_to_call)(initial={'chosen_method': eval(string_choice)[0][0]})
 
     dicc = {"form": form, "form_url": form_url, "results": results,

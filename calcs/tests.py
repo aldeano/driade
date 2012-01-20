@@ -2,8 +2,8 @@ from django.test import TestCase
 
 class IndexTestCase(TestCase):
 
-    url_list = ('/', '/calcs/Chill/', '/calcs/Heat/', 
-        '/calcs/Evapo/')
+    url_list = ('/', '/calcs/chill/', '/calcs/heat/', 
+        '/calcs/evapo/')
     
     bad_urls = ('/dsbkjdfb/', '/calcs/casdkfjh/')
     
@@ -26,44 +26,69 @@ class IndexTestCase(TestCase):
     def test_post(self):
         '''test post views and forms
         '''
-        resp = self.client.post('/calcs/Chill/', {'chosen_method': 'horas_frio',
-        'temp': 5})
-        self.assertEqual(resp.status_code, 200)
-        self.assertTrue('results' in resp.context)
-        self.assertEqual(resp.context['results'], '1 hf')
+        
+        checkins = (('/calcs/chill/', {'chosen_method': 'horas_frio',
+        'temp': 5}, '1 hf'),
+        ('/calcs/chill/', {'chosen_method': 'horas_frio', 'temp': 5,
+        'base_temp': 4}, '0 hf'),
+        ('/calcs/chill/', {'chosen_method': 'richardson', 'temp': 5}, '1 uf'),
+        ('/calcs/chill/', {'chosen_method': 'richardson_sin_neg', 'temp': 2}, '0.5 uf'),
+        ('/calcs/chill/', {'chosen_method': 'shaltout', 'temp': 21}, '-1 uf'),
+        ('/calcs/chill/', {'chosen_method': 'bajas_necesidades', 'temp': 5}, '0.5 uf'),
+        ('/calcs/heat/', {'chosen_method': 'dias_grado', 'temp': 21}, '11 dg'),
+        ('/calcs/heat/', {'chosen_method': 'dias_grado', 'temp': 14, 
+        'base_temp': 15}, '0 dg'),
+        ('/calcs/heat/', {'chosen_method': 'dias_grado', 'temp': 31, 
+        'sup_temp': 25}, '0 dg'),
+        ('/calcs/heat/', {'chosen_method': 'growing_degree_hours', 'temp': 21},
+        '19.18 gdh'),
+        ('/calcs/heat/', {'chosen_method': 'growing_degree_hours', 'temp': 26},
+        '0.06 gdh'),
+        ('/calcs/evapo/', {'chosen_method': 'penman_monteith_fao', 'max_temp': 31, 
+        'min_temp': 13.2, 'humidity': 56, 'wind_speed': 1.32, 'air_pressure': 984, 
+        'solar_radiation': 19.43, 'latitude': -32, 'altitude': 41, 'day': "04/10/2011"},
+        '3.42 mm'),
+        )
+        
+        for check in checkins:
+            resp = self.client.post(check[0], check[1])
+            self.assertEqual(resp.status_code, 200)
+            self.assertTrue('results' in resp.context)
+            self.assertEqual(resp.context['results'], check[2])
     
 class AlgoritmsTestCase(TestCase):
     
     def test_algoritms(self):
         
         from calcs.algoritms import algoritms
+        from datetime import date
         #calcule good values first
         values = [
-        (("Chill", {"chosen_method": "horas_frio", "temp": 7, "base_temp": None}), (1)),
-        (("Chill", {"chosen_method": "horas_frio", "temp": 8, "base_temp": None}), (0)),
-        (("Chill", {"chosen_method": "horas_frio", "temp": 4, "base_temp": 7}), (1)),
-        (("Chill", {"chosen_method": "horas_frio", "temp": 9, "base_temp": 7}), (0)),
-        (("Chill", {"chosen_method": "richardson", "temp": 9}), (1)),
-        (("Chill", {"chosen_method": "richardson", "temp": 1}), (0)),
-        (("Chill", {"chosen_method": "richardson", "temp": 17}), (-0.5)),
-        (("Chill", {"chosen_method": "richardson_sin_neg", "temp": 1.7}), (0.5)),
-        (("Chill", {"chosen_method": "richardson_sin_neg", "temp": 17}), (0)),
-        (("Chill", {"chosen_method": "shaltout", "temp": -4}), (0)),
-        (("Chill", {"chosen_method": "shaltout", "temp": 8}), (1)),
-        (("Chill", {"chosen_method": "shaltout", "temp": 21}), (-1)),
-        (("Chill", {"chosen_method": "bajas_necesidades", "temp": 1}), (0)),
-        (("Chill", {"chosen_method": "bajas_necesidades", "temp": 9}), (1)),
-        (("Chill", {"chosen_method": "bajas_necesidades", "temp": 22}), (-1)),
-        (("Heat", {"chosen_method": "dias_grado", "temp": 21, "base_temp": None, "sup_temp": None}), (11)),
-        (("Heat", {"chosen_method": "dias_grado", "temp": 21, "base_temp": 7, "sup_temp": None}), (14)),
-        (("Heat", {"chosen_method": "dias_grado", "temp": 21, "base_temp": None, "sup_temp": 20}), (0)),
-        (("Heat", {"chosen_method": "growing_degree_hours", "temp": 21}), (19.175507130317943 )),
-        (("Heat", {"chosen_method": "growing_degree_hours", "temp": 26}), (0.058720259195217284)),
-        (("Heat", {"chosen_method": "growing_degree_hours", "temp": 37}), (0)),
-        (("Evapo", {"chosen_method": "penman-monteith-fao", "max_temp": 21.5, 
+        (("chill", {"chosen_method": "horas_frio", "temp": 7, "base_temp": None}), (1)),
+        (("chill", {"chosen_method": "horas_frio", "temp": 8, "base_temp": None}), (0)),
+        (("chill", {"chosen_method": "horas_frio", "temp": 4, "base_temp": 7}), (1)),
+        (("chill", {"chosen_method": "horas_frio", "temp": 9, "base_temp": 7}), (0)),
+        (("chill", {"chosen_method": "richardson", "temp": 9}), (1)),
+        (("chill", {"chosen_method": "richardson", "temp": 1}), (0)),
+        (("chill", {"chosen_method": "richardson", "temp": 17}), (-0.5)),
+        (("chill", {"chosen_method": "richardson_sin_neg", "temp": 1.7}), (0.5)),
+        (("chill", {"chosen_method": "richardson_sin_neg", "temp": 17}), (0)),
+        (("chill", {"chosen_method": "shaltout", "temp": -4}), (0)),
+        (("chill", {"chosen_method": "shaltout", "temp": 8}), (1)),
+        (("chill", {"chosen_method": "shaltout", "temp": 21}), (-1)),
+        (("chill", {"chosen_method": "bajas_necesidades", "temp": 1}), (0)),
+        (("chill", {"chosen_method": "bajas_necesidades", "temp": 9}), (1)),
+        (("chill", {"chosen_method": "bajas_necesidades", "temp": 22}), (-1)),
+        (("heat", {"chosen_method": "dias_grado", "temp": 21, "base_temp": None, "sup_temp": None}), (11)),
+        (("heat", {"chosen_method": "dias_grado", "temp": 21, "base_temp": 7, "sup_temp": None}), (14)),
+        (("heat", {"chosen_method": "dias_grado", "temp": 21, "base_temp": None, "sup_temp": 20}), (0)),
+        (("heat", {"chosen_method": "growing_degree_hours", "temp": 21}), (19.18 )),
+        (("heat", {"chosen_method": "growing_degree_hours", "temp": 26}), (0.06)),
+        (("heat", {"chosen_method": "growing_degree_hours", "temp": 37}), (0)),
+        (("evapo", {"chosen_method": "penman_monteith_fao", "max_temp": 21.5, 
         "min_temp": 12.3, "humidity": 73.5, "wind_speed": 2.078, 
         "air_pressure": 100.1, "solar_radiation": 22.07, "latitude": 50.8,
-        "altitude": 100, "day": "06/07/2011"}), (3.7424693078655804)),
+        "altitude": 100, "day": date(2011, 7, 6)}), (3.74)),
         ]
         for argument, result in values:
             good_result = algoritms(argument[0], argument[1])

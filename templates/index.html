@@ -27,13 +27,13 @@
         <div id="content">
             {% block contenido %}<h2>Qué quieres calcular?</h2>
             <div class="calc_button">
-                <p><a href="{% url fenologia purpose="Chill" %}">Frío</a></p>
+                <p><a href="{% url fenologia purpose="chill" %}">Frío</a></p>
             </div>
             <div class="calc_button">
-                <p><a href="{% url fenologia purpose="Heat" %}">Calor</a></p>
+                <p><a href="{% url fenologia purpose="heat" %}">Calor</a></p>
             </div>
             <div class="calc_button">
-                <p><a href="{% url fenologia purpose="Evapo" %}">Evapotranspiración</a></p>
+                <p><a href="{% url fenologia purpose="evapo" %}">Evapotranspiración</a></p>
             </div>{% endblock %}
         </div>
         <div id="forms">

@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 import math
-from datetime import datetime, timedelta
+from datetime import date
 
 explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
     "detalla se ocupa 7,22º y 0º C como estandar", 
@@ -23,18 +23,18 @@ explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
     "growing_degree_hours": "Estimación del efecto de la tempratura sobre " \
     "el desarrollo fenológico basado en una curva cuyo óptimo está en los " \
     "25º C. Basado en el trabajo de Anderson & Richardson (1986)", 
-    "evapotranspiracion": "Milímetros de agua evaporada por una superficie " \
-    "estandar de pasto en condiciones ideales. Se usa el método propuesto " \
-    "por FAO, publicación nº 56",}
+    "evapotranspiracion": "Milímetros de agua evaporada en un día por una " \
+    "superficie estandar de pasto en condiciones ideales. Se usa el método " \
+    "propuesto por FAO, publicación nº 56",}
 
 units = {"horas_frio": "hf", "richardson": "uf", "richardson_sin_neg": "uf",
     "shaltout": "uf", "bajas_necesidades": "uf", "dias_grado": "dg", 
-    "growing_degree_hours": "gdh"}
+    "growing_degree_hours": "gdh", "penman_monteith_fao": "mm"}
 
 def algoritms(phenologic_calc, kwdata):
     '''calc's algoritms, it needs data inside a dictionary'''
       
-    if phenologic_calc == "Chill":
+    if phenologic_calc == "chill":
         
         temp_calc = kwdata["temp"]
         
@@ -108,7 +108,7 @@ def algoritms(phenologic_calc, kwdata):
         else:
             raise forms.ValidationError("Elige un método de la lista")
                 
-    elif phenologic_calc == "Heat":
+    elif phenologic_calc == "heat":
         
         temp_calc = kwdata["temp"]
         
@@ -138,16 +138,18 @@ def algoritms(phenologic_calc, kwdata):
         else:
             raise forms.ValidationError("Elige un método de la lista")
             
-    elif phenologic_calc == "Evapo":
+    elif phenologic_calc == "evapo":
         
-        if kwdata["chosen_method"] == "penman-monteith-fao":        
+        if kwdata["chosen_method"] == "penman_monteith_fao":        
             #First obtain diary net radiation
             day = kwdata["day"]
-            date_calc = datetime.strptime(day, "%d/%m/%Y")
+            #date_calc = datetime.strptime(day, "%d/%m/%Y")
             #To get the julian date compare the first day of the year and the given date
             #Get the seconds of that difference and divide by all the 
             #seconds in a day - 86400 - and plus one
-            julian_date = (date_calc - datetime(date_calc.year, 1, 1)).total_seconds() \
+            #julian_date = (date_calc - datetime(date_calc.year, 1, 1)).total_seconds() \
+            #    /86400 + 1
+            julian_date = (day - date(day.year, 1, 1)).total_seconds() \
                 /86400 + 1
             relative_distance = 1 + 0.033 * math.cos((2 * math.pi / 365) \
                 *julian_date)
@@ -197,4 +199,8 @@ def algoritms(phenologic_calc, kwdata):
     else:
         raise forms.ValidationError("Elige un método de la lista")
     
+    #if result is a float, reduce it
+    if type(result).__name__ == 'float':
+        result = round(result, 2)
+        
     return result

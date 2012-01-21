@@ -3,11 +3,11 @@
 import math
 from datetime import date
 
-explanations = {"horas_frio": "Horas entre ciertas temperaturas, si no se " \
-    "detalla se ocupa 7,22º y 0º C como estandar", 
+explanations = {"horas_frio": "Horas de frio, si no se " \
+    "especifica una temperatura se ocupa 7,22º y 0º C como estandar", 
     "richardson": "Cuantificación del frío acumulado según los trabajos " \
     "de Richardson (1974) en los cuales se asigna mayor efecto a temperaturas " \
-    "cercanas a 5º C", 
+    "cercanas a 5º C.", 
     "richardson_sin_neg": "Cuantificación del frío acumulado según los trabajos " \
     "de Richardson (1974) en los cuales se asigna mayor efecto a temperaturas " \
     "cercanas a 5º C. Sin efectos negativos, adecuado para zonas con inviernos " \

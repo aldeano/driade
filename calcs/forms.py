@@ -24,7 +24,7 @@ evapo_choices = (
 class chillForm(forms.Form):
     
     chosen_method = forms.ChoiceField(choices=chill_choices, label="Método")
-    temp = forms.DecimalField(label="Temperatura ºC",
+    temp = forms.DecimalField(label="Temperatura horaria ºC",
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False, 
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
@@ -37,7 +37,7 @@ class chillForm(forms.Form):
 class heatForm(forms.Form):
     
     chosen_method = forms.ChoiceField(choices=heat_choices, label="Método")
-    temp = forms.DecimalField(label="Temperatura ºC",
+    temp = forms.DecimalField(label="Temperatura horaria ºC",
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False, 
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
@@ -51,15 +51,15 @@ class evapoForm(forms.Form):
     
     chosen_method = forms.ChoiceField(choices=evapo_choices, label="Método",
         widget=forms.HiddenInput)
-    max_temp = forms.FloatField(label="Temperatura máxima ºC",
+    max_temp = forms.FloatField(label="Temperatura máxima diaria ºC",
         validators=[MaxValueValidator(60), MinValueValidator(-20)])
-    min_temp = forms.FloatField(label="Temperatura mínima ºC",
+    min_temp = forms.FloatField(label="Temperatura mínima diaria ºC",
         validators=[MaxValueValidator(60), MinValueValidator(-20)])
-    humidity = forms.FloatField(label="Humedad relativa %",
+    humidity = forms.FloatField(label="Humedad relativa diaria %",
         validators=[MaxValueValidator(100), MinValueValidator(0)])
-    wind_speed = forms.FloatField(label="Velocidad del viento m/s",
+    wind_speed = forms.FloatField(label="Velocidad del viento diaria m/s",
         validators=[MaxValueValidator(30), MinValueValidator(0)])
-    air_pressure = forms.FloatField(label="Presión atmosférica mb",
+    air_pressure = forms.FloatField(label="Presión atmosférica diaria mb",
         validators=[MaxValueValidator(1030), MinValueValidator(0)])
     solar_radiation = forms.FloatField(label="Radiación solar MJ m-2 día-1",
         validators=[MaxValueValidator(50), MinValueValidator(0)])

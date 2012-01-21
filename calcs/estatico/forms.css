@@ -1,2 +1,10 @@
 /*
 css for display of form fields, position and errors*/
+input, textarea {
+padding: 9 px;
+border: solid 1px #e5e5e5;
+outline: 0;
+font: normal 13px/100% Verdana, Tahoma, sans-serif;
+width: 200px;
+background: #ffffff;
+}

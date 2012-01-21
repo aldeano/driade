@@ -1,11 +1,12 @@
 {% extends 'index.html' %}
 {% block titulo %}Cálculos | {% endblock %}
-    {% block jscript %}<script type="text/javascript" src="{{ STATIC_URL }}form_dinamico.js"></script>
+    {% block sscript %}<script type="text/javascript" src="{{ STATIC_URL }}form_dinamico.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             explicacion();
         });
     </script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}forms.css" />
     {% endblock %}
 {% block form_choice %}
 {% if results or results == 0%}

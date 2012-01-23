@@ -3,7 +3,7 @@
 from django import forms
 from django.shortcuts import render
 from django.http import HttpResponse, Http404
-from calcs.forms import chillForm, heatForm, evapoForm, heat_choices, chill_choices, evapo_choices
+from calcs.forms import *
 from calcs.algoritms import *
    
 def phenology(request, purpose=None):
@@ -22,10 +22,10 @@ def phenology(request, purpose=None):
     form_url = "/calcs/" + purpose + "/"
     #search for the first explanation of each purpose
     #and separate evapo forms from the others
-    if purpose == "Chill":
+    if purpose == "chill":
         explanation = explanations["horas_frio"]
         choices_field = True
-    elif purpose == "Heat":
+    elif purpose == "heat":
         explanation = explanations["dias_grado"]
         choices_field = True
     else:
@@ -35,8 +35,7 @@ def phenology(request, purpose=None):
     if request.method == "POST":
         form = getattr(mod, string_to_call)(request.POST)
         if form.is_valid():
-            phenologic_calc = purpose
-            results = algoritms(phenologic_calc, form.cleaned_data)
+            results = algoritms(purpose, form.cleaned_data)
             results = str(results) + " " + units[form.cleaned_data["chosen_method"]]
             string_choice = purpose + "_choices"
             form = getattr(mod, string_to_call)(initial={'chosen_method': eval(string_choice)[0][0]})

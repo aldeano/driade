@@ -9,7 +9,7 @@ chill_choices = (
     ("richardson", "Unidades de Frío Richardson"),
     ("richardson_sin_neg", "Unidades de Frío Richardson corregidas"),
     ("shaltout", "Unidades de Frío Shaltout y Unrath"),
-    ("bajas_necesidades", "Unidades de frío para bajas necesidades"),
+    ("bajas_necesidades", "Unidades de Frío para bajas necesidades"),
     )
 
 heat_choices = (

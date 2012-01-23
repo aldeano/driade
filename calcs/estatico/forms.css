@@ -6,5 +6,39 @@ border: solid 1px #e5e5e5;
 outline: 0;
 font: normal 13px/100% Verdana, Tahoma, sans-serif;
 width: 200px;
-background: #ffffff;
+background: -webkit-gradient(linear, left top, left 10, from(#ffffff), 
+color-stop(4%, #eeeeee), to(#ffffff));
+background: -moz-linear-gradient(top, #ffffff, #eeeeee 1px, #ffffff 10px);
+box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 8px;
+-moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 8px;
+-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 8px;
+}
+
+input:hover, input:focus {
+border-color: #c9c9c9;
+box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 8px;
+-moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 8px;
+-webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 8px;
+}
+
+#calcs_form label {
+margin-left: 10px;
+color: #999999;
+}
+
+input[type=submit] {
+width: auto;
+padding: 9px 15px;
+background: #617798;
+border: 0;
+font-size: 14px;
+color: #ffffff;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+}
+
+input[type=submit]:hover {
+box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 8px;
+-moz-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 8px;
+-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 8px;
 }

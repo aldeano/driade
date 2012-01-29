@@ -21,36 +21,32 @@ evapo_choices = (
     ("penman_monteith_fao", "Penman-Monteith FAO"),
     )
 
-class chillForm(forms.Form):
+class choicesForm(forms.Form):
     
-    chosen_method = forms.ChoiceField(choices=chill_choices, label="Método")
+    def __init__(self, *args, **kwargs):
+        choices = kwargs.pop('method')
+        super(choicesForm, self).__init__(*args, **kwargs)
+        self.fields["chosen_method"].choices = choices
+        
+    chosen_method = forms.ChoiceField(label="Método")
+
+class simpleForm(forms.Form):
+    
     temp = forms.DecimalField(label="Temperatura horaria ºC",
-        validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
-    base_temp = forms.DecimalField(label="Temperatura base ºC", required=False, 
-        validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
-    sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
         
     class Media:
         css = {'all': ('forms.css',)}
     
-class heatForm(forms.Form):
+class tempForm(simpleForm):
     
-    chosen_method = forms.ChoiceField(choices=heat_choices, label="Método")
-    temp = forms.DecimalField(label="Temperatura horaria ºC",
-        validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
     base_temp = forms.DecimalField(label="Temperatura base ºC", required=False, 
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
     sup_temp = forms.DecimalField(label="Temperatura superior ºC", required=False,
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
-            
-    class Media:
-        css = {'all': ('forms.css',)}
     
 class evapoForm(forms.Form):
     
-    chosen_method = forms.ChoiceField(choices=evapo_choices, label="Método",
-        widget=forms.HiddenInput)
     max_temp = forms.FloatField(label="Temperatura máxima diaria ºC",
         validators=[MaxValueValidator(60), MinValueValidator(-20)])
     min_temp = forms.FloatField(label="Temperatura mínima diaria ºC",

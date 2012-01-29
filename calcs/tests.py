@@ -1,4 +1,6 @@
 from django.test import TestCase
+from django.core.urlresolvers import reverse
+from calcs.algoritms import explanations
 
 class IndexTestCase(TestCase):
 
@@ -7,6 +9,8 @@ class IndexTestCase(TestCase):
     
     bad_urls = ('/dsbkjdfb/', '/calcs/casdkfjh/')
     
+    ajax_urls = ('horas_frio')
+    
     def test_index(self):
         '''Test to probe existence of each page
         '''
@@ -14,7 +18,7 @@ class IndexTestCase(TestCase):
         for page in self.url_list:
             resp = self.client.get(page)
             self.assertEqual(resp.status_code, 200)
-    
+        
     def test_bad_urls(self):
         ''' it does what it said, test erroneous urls waiting for a 
         404 message'''
@@ -26,7 +30,6 @@ class IndexTestCase(TestCase):
     def test_post(self):
         '''test post views and forms
         '''
-        
         checkins = (('/calcs/chill/', {'chosen_method': 'horas_frio',
         'temp': 5}, '1 hf'),
         ('/calcs/chill/', {'chosen_method': 'horas_frio', 'temp': 5,
@@ -53,7 +56,7 @@ class IndexTestCase(TestCase):
         for check in checkins:
             resp = self.client.post(check[0], check[1])
             self.assertEqual(resp.status_code, 200)
-            self.assertTrue('results' in resp.context)
+            self.assertTrue('results' and 'explanation' in resp.context)
             self.assertEqual(resp.context['results'], check[2])
     
 class AlgoritmsTestCase(TestCase):

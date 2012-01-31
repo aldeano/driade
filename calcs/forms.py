@@ -21,20 +21,17 @@ evapo_choices = (
     ("penman_monteith_fao", "Penman-Monteith FAO"),
     )
 
-class choicesForm(forms.Form):
+class simpleForm(forms.Form):
     
     def __init__(self, *args, **kwargs):
         choices = kwargs.pop('method')
-        super(choicesForm, self).__init__(*args, **kwargs)
+        super(simpleForm, self).__init__(*args, **kwargs)
         self.fields["chosen_method"].choices = choices
         
     chosen_method = forms.ChoiceField(label="Método")
-
-class simpleForm(forms.Form):
-    
     temp = forms.DecimalField(label="Temperatura horaria ºC",
         validators=[MaxValueValidator(60), MinValueValidator(-20)], localize=True)
-        
+    
     class Media:
         css = {'all': ('forms.css',)}
     
@@ -47,6 +44,8 @@ class tempForm(simpleForm):
     
 class evapoForm(forms.Form):
     
+    chosen_method = forms.ChoiceField(choices=evapo_choices, label="Método",
+        widget=forms.HiddenInput)
     max_temp = forms.FloatField(label="Temperatura máxima diaria ºC",
         validators=[MaxValueValidator(60), MinValueValidator(-20)])
     min_temp = forms.FloatField(label="Temperatura mínima diaria ºC",

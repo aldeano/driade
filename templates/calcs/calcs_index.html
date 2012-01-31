@@ -13,7 +13,6 @@
     Resultado: {{ results }}
 {% endif %}
 <form action="{{ form_url }}" method="post" id="calcs_form">{% csrf_token %}
-    {{ form_choices.as_p }}
     {{ form.as_p }}
     <input type="submit" value="Go for it!" />
 </form>

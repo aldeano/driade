@@ -16,30 +16,25 @@ def phenology(request, purpose=None):
     #asign choices for each purpose, respective form and explanation    
     if purpose == "chill":
         choices = chill_choices
-        form = tempForm
+        form = tempForm(method=choices)
         explanation = explanations['horas_frio']
     elif purpose == "heat":
         choices = heat_choices
-        form = tempForm
+        form = tempForm(method=choices)
         explanation = explanations['dias_grado']
     else:
-        choices = evapo_choices
         form = evapoForm
         explanation = explanations['penman_monteith_fao']
     
-    form_choices = choicesForm(method=choices)
     form_url = "/calcs/" + purpose + "/"
         
     if request.method == "POST":
-        form = form(request.POST)
-        form_choices = form_choices(request.POST)
-        if form.is_valid() and form_choices.is_valid():
-            #join both post form datas
-            formData = dict(form.items() + form_choices.items())
-            results = algoritms(purpose, formData)
-            results = str(results) + " " + units[formDatay["chosen_method"]]
+        form = tempForm(request.POST, method=choices)
+        if form.is_valid():
+            results = algoritms(purpose, form.cleaned_data)
+            results = str(results) + " " + units[form["chosen_method"]]
         
-    dicc = {"form_choices": form_choices, "form": form, "form_url": form_url,
+    dicc = {"form": form, "form_url": form_url,
     "results": results, "explanation": explanation}
     
     return render(request, "calcs/calcs_index.html", dicc)

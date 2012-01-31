@@ -32,7 +32,7 @@ def phenology(request, purpose=None):
         form = tempForm(request.POST, method=choices)
         if form.is_valid():
             results = algoritms(purpose, form.cleaned_data)
-            results = str(results) + " " + units[form["chosen_method"]]
+            results = str(results) + " " + units[form.cleaned_data["chosen_method"]]
         
     dicc = {"form": form, "form_url": form_url,
     "results": results, "explanation": explanation}
